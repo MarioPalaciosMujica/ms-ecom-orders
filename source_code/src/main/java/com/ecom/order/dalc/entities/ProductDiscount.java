@@ -27,8 +27,8 @@ public class ProductDiscount {
     @Column(name = "percentage")
     private BigDecimal percentage;
 
-    @Column(name = "fixed_price")
-    private BigDecimal fixedPrice;
+    @Column(name = "fixed_amount")
+    private BigDecimal fixedAmount;
 
     @Column(name = "ms_product_id_discount")
     private Long msProductIdDiscount;
@@ -71,12 +71,12 @@ public class ProductDiscount {
         this.percentage = percentage;
     }
 
-    public BigDecimal getFixedPrice() {
-        return fixedPrice;
+    public BigDecimal getFixedAmount() {
+        return fixedAmount;
     }
 
-    public void setFixedPrice(BigDecimal fixedPrice) {
-        this.fixedPrice = fixedPrice;
+    public void setFixedAmount(BigDecimal fixedAmount) {
+        this.fixedAmount = fixedAmount;
     }
 
     public Long getMsProductIdDiscount() {

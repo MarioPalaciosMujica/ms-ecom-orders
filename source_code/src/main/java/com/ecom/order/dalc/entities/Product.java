@@ -43,7 +43,7 @@ public class Product {
     private Long msProductIdProduct;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private Set<ProductDiscount> discounts;
+    private Set<ProductDiscount> productDiscounts;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
@@ -132,12 +132,12 @@ public class Product {
         this.msProductIdProduct = msProductIdProduct;
     }
 
-    public Set<ProductDiscount> getDiscounts() {
-        return discounts;
+    public Set<ProductDiscount> getProductDiscounts() {
+        return productDiscounts;
     }
 
-    public void setDiscounts(Set<ProductDiscount> discounts) {
-        this.discounts = discounts;
+    public void setProductDiscounts(Set<ProductDiscount> productDiscounts) {
+        this.productDiscounts = productDiscounts;
     }
 
     public Set<ProductTax> getProductTaxes() {

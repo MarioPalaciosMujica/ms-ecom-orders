@@ -33,10 +33,10 @@ public class PurchaseOrderCoupon {
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
 
-    @Column(name = "ms_product_id_cupon")
-    private Long msProductIdCupon;
+    @Column(name = "ms_product_id_coupon")
+    private Long msProductIdCoupon;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "cupon")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "purchaseOrderCoupon")
     private PurchaseOrder purchaseOrder;
 
 
@@ -91,12 +91,12 @@ public class PurchaseOrderCoupon {
         this.totalAmount = totalAmount;
     }
 
-    public Long getMsProductIdCupon() {
-        return msProductIdCupon;
+    public Long getMsProductIdCoupon() {
+        return msProductIdCoupon;
     }
 
-    public void setMsProductIdCupon(Long msProductIdCupon) {
-        this.msProductIdCupon = msProductIdCupon;
+    public void setMsProductIdCoupon(Long msProductIdCoupon) {
+        this.msProductIdCoupon = msProductIdCoupon;
     }
 
     public PurchaseOrder getPurchaseOrder() {

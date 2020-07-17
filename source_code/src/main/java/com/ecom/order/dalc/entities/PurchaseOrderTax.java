@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "tbl_purchase_order_taxes")
@@ -37,8 +36,9 @@ public class PurchaseOrderTax {
     @Column(name = "modified")
     private Date modified;
 
-    @OneToMany(mappedBy = "purchaseOrderTax", fetch = FetchType.LAZY)
-    private Set<PurchaseOrder> purchaseOrders;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_purchase_order")
+    private PurchaseOrder purchaseOrder;
 
 
     // GETTERS AND SETTERS
@@ -99,11 +99,11 @@ public class PurchaseOrderTax {
         this.modified = modified;
     }
 
-    public Set<PurchaseOrder> getPurchaseOrders() {
-        return purchaseOrders;
+    public PurchaseOrder getPurchaseOrder() {
+        return purchaseOrder;
     }
 
-    public void setPurchaseOrders(Set<PurchaseOrder> purchaseOrders) {
-        this.purchaseOrders = purchaseOrders;
+    public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
     }
 }

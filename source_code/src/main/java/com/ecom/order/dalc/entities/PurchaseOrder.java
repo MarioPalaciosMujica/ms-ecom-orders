@@ -48,10 +48,11 @@ public class PurchaseOrder {
     @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.LAZY)
     private Set<Product> products;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_purchase_order_tax")
-    private PurchaseOrderTax purchaseOrderTax;
+    @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.LAZY)
+    private Set<PurchaseOrderTax> purchaseOrderTaxes;
 
+
+    // GETTERS AND SETTERS
 
     public Long getIdPurchaseOrder() {
         return idPurchaseOrder;
@@ -133,11 +134,11 @@ public class PurchaseOrder {
         this.products = products;
     }
 
-    public PurchaseOrderTax getPurchaseOrderTax() {
-        return purchaseOrderTax;
+    public Set<PurchaseOrderTax> getPurchaseOrderTaxes() {
+        return purchaseOrderTaxes;
     }
 
-    public void setPurchaseOrderTax(PurchaseOrderTax purchaseOrderTax) {
-        this.purchaseOrderTax = purchaseOrderTax;
+    public void setPurchaseOrderTaxes(Set<PurchaseOrderTax> purchaseOrderTaxes) {
+        this.purchaseOrderTaxes = purchaseOrderTaxes;
     }
 }

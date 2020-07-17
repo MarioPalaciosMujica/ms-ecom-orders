@@ -2,6 +2,7 @@ package com.ecom.order.services;
 
 import com.ecom.order.dalc.entities.Product;
 import com.ecom.order.dalc.entities.PurchaseOrder;
+import com.ecom.order.dalc.entities.PurchaseOrderTax;
 import com.ecom.order.dalc.repositories.IPurchaseOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,9 @@ public class PurchaseOrderService {
         }
 
         Set<Product> productSet = entity.getProducts();
+//        Set<PurchaseOrderTax> taxSet = entity.getPurchaseOrderTaxes();
         entity.setProducts(null);
+//        entity.setPurchaseOrderTaxes(null);
         entity = purchaseOrderRepository.save(entity);
 
         for (Product product : productSet){

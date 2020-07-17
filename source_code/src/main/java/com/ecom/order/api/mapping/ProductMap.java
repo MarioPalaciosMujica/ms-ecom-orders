@@ -26,7 +26,8 @@ public class ProductMap {
             model.setQty(entity.getQty());
             model.setMsProductIdProduct(entity.getMsProductIdProduct());
             model.setImage(null);
-            model.setUrlImage(model.getUrlImage());
+            model.setMsProductIdProduct(entity.getMsProductIdProduct());
+            model.setUrlImage(entity.getUrlImage());
             model.setProductDiscounts(productDiscountMap.toModelList(new ArrayList<>(entity.getProductDiscounts())));
             model.setProductTaxes(productTaxMap.toModelList(new ArrayList<>(entity.getProductTaxes())));
             model.setMaterials(materialMap.toModelList(new ArrayList<>(entity.getMaterials())));

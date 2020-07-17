@@ -21,12 +21,13 @@ public class ProductService {
     @Autowired private PurchaseOrderTaxService purchaseOrderTaxService;
 
     public Product save(@NotNull Product entity){
+        entity.setMsProductIdProduct(entity.getIdProduct());
         entity.setIdProduct(null);
 
-        Set<ProductDiscount> discountSet = entity.getDiscounts();
+        Set<ProductDiscount> discountSet = entity.getProductDiscounts();
 //        Set<ProductTax> taxSet = entity.getProductTaxes();
 
-        entity.setDiscounts(null);
+        entity.setProductDiscounts(null);
         entity.setProductTaxes(null);
         entity = productRepository.save(entity);
 

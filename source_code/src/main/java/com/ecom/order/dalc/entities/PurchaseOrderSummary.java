@@ -30,7 +30,7 @@ public class PurchaseOrderSummary {
     @Column(name = "total", nullable = false)
     private BigDecimal total;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "orderSummary")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "purchaseOrderSummary")
     private PurchaseOrder purchaseOrder;
 
 

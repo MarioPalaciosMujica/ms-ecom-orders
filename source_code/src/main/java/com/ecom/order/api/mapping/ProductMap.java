@@ -12,8 +12,6 @@ import java.util.List;
 @Component
 public class ProductMap {
 
-    @Autowired private ProductDiscountMap productDiscountMap;
-    @Autowired private ProductTaxMap productTaxMap;
     @Autowired private MaterialMap materialMap;
 
     public ProductModel toModel(Product entity){
@@ -21,15 +19,16 @@ public class ProductMap {
             ProductModel model = new ProductModel();
             model.setIdProduct(entity.getIdProduct());
             model.setBarcode(entity.getBarcode());
-            model.setName(entity.getName());
+            model.setTitle(entity.getTitle());
             model.setPrice(entity.getPrice());
-            model.setQty(entity.getQty());
+            model.setSale(entity.isSale());
+            model.setDiscountPercentage(entity.getDiscountPercentage());
+            model.setPriceDiscount(entity.getPriceDiscount());
+            model.setQuantity(entity.getQuantity());
             model.setMsProductIdProduct(entity.getMsProductIdProduct());
             model.setImage(null);
             model.setMsProductIdProduct(entity.getMsProductIdProduct());
-            model.setUrlImage(entity.getUrlImage());
-            model.setProductDiscounts(productDiscountMap.toModelList(new ArrayList<>(entity.getProductDiscounts())));
-            model.setProductTaxes(productTaxMap.toModelList(new ArrayList<>(entity.getProductTaxes())));
+            model.setImageSrc(entity.getImageSrc());
             model.setMaterials(materialMap.toModelList(new ArrayList<>(entity.getMaterials())));
             return model;
         }
@@ -43,13 +42,14 @@ public class ProductMap {
             Product entity = new Product();
             entity.setIdProduct(model.getIdProduct());
             entity.setBarcode(model.getBarcode());
-            entity.setName(model.getName());
+            entity.setTitle(model.getTitle());
             entity.setPrice(model.getPrice());
-            entity.setQty(model.getQty());
+            entity.setSale(model.isSale());
+            entity.setDiscountPercentage(model.getDiscountPercentage());
+            entity.setPriceDiscount(model.getPriceDiscount());
+            entity.setQuantity(model.getQuantity());
             entity.setMsProductIdProduct(model.getMsProductIdProduct());
-            entity.setUrlImage(entity.getUrlImage());
-            entity.setProductDiscounts(new HashSet<>(this.productDiscountMap.toEntityList(model.getProductDiscounts())));
-            entity.setProductTaxes(new HashSet<>(this.productTaxMap.toEntityList(model.getProductTaxes())));
+            entity.setImageSrc(model.getImage().getSrc());
             entity.setMaterials(new HashSet<>(this.materialMap.toEntityList(model.getMaterials())));
             return entity;
         }

@@ -6,16 +6,17 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "tbl_purchase_order_taxes")
 @NoArgsConstructor
-public class PurchaseOrderTax {
+public class Tax {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_purchase_order_tax", updatable = false, nullable = false, unique = true)
-    private Long idProductTax;
+    @Column(name = "id_tax", updatable = false, nullable = false, unique = true)
+    private Long idTax;
 
     @Column(name = "name", nullable = false)
     @Size(min = 2, max = 50, message = "name size not valid")
@@ -23,9 +24,6 @@ public class PurchaseOrderTax {
 
     @Column(name = "percentage")
     private BigDecimal percentage;
-
-    @Column(name = "fixed_amount")
-    private BigDecimal fixedAmount;
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
@@ -36,19 +34,22 @@ public class PurchaseOrderTax {
     @Column(name = "modified")
     private Date modified;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_purchase_order")
-    private PurchaseOrder purchaseOrder;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "tbr_purchase_orders_taxes",
+            joinColumns = @JoinColumn(name = "id_tax"),
+            inverseJoinColumns = @JoinColumn(name = "id_purchase_order")
+    )
+    private Set<PurchaseOrder> purchaseOrders;
 
 
-    // GETTERS AND SETTERS
 
-    public Long getIdProductTax() {
-        return idProductTax;
+    public Long getIdTax() {
+        return idTax;
     }
 
-    public void setIdProductTax(Long idProductTax) {
-        this.idProductTax = idProductTax;
+    public void setIdTax(Long idTax) {
+        this.idTax = idTax;
     }
 
     public String getName() {
@@ -65,14 +66,6 @@ public class PurchaseOrderTax {
 
     public void setPercentage(BigDecimal percentage) {
         this.percentage = percentage;
-    }
-
-    public BigDecimal getFixedAmount() {
-        return fixedAmount;
-    }
-
-    public void setFixedAmount(BigDecimal fixedAmount) {
-        this.fixedAmount = fixedAmount;
     }
 
     public boolean isActive() {
@@ -99,11 +92,11 @@ public class PurchaseOrderTax {
         this.modified = modified;
     }
 
-    public PurchaseOrder getPurchaseOrder() {
-        return purchaseOrder;
+    public Set<PurchaseOrder> getPurchaseOrders() {
+        return purchaseOrders;
     }
 
-    public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-        this.purchaseOrder = purchaseOrder;
+    public void setPurchaseOrders(Set<PurchaseOrder> purchaseOrders) {
+        this.purchaseOrders = purchaseOrders;
     }
 }

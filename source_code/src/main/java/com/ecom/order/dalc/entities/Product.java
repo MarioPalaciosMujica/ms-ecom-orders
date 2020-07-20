@@ -21,37 +21,35 @@ public class Product {
     @Size(max = 13, message = "barcode size invalid")
     private String barcode;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "title", nullable = false)
     @Size(min = 2, max = 50, message = "name size invalid")
-    private String name;
+    private String title;
 
     @Column(name = "description")
     @Size(max = 1000, message = "description size not valid")
     private String description;
 
     @Column(name = "quantity", nullable = false)
-    private int qty;
+    private int quantity;
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "url_image")
-    @Size(max = 255, message = "urlImage size invalid")
-    private String urlImage;
+    @Column(name = "is_sale", nullable = false)
+    private boolean isSale;
+
+    @Column(name = "discount_percentage")
+    private BigDecimal discountPercentage;
+
+    @Column(name = "price_discount")
+    private BigDecimal priceDiscount;
+
+    @Column(name = "image_src")
+    @Size(max = 255, message = "imageSrc size invalid")
+    private String imageSrc;
 
     @Column(name = "ms_product_id_product")
     private Long msProductIdProduct;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private Set<ProductDiscount> productDiscounts;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "tbr_products_taxes",
-            joinColumns = @JoinColumn(name = "id_product"),
-            inverseJoinColumns = @JoinColumn(name = "id_product_tax")
-    )
-    private Set<ProductTax> productTaxes;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_purchase_order")
@@ -65,8 +63,6 @@ public class Product {
     )
     private Set<Material> materials;
 
-
-    // GETTERS AND SETTERS
 
     public Long getIdProduct() {
         return idProduct;
@@ -84,12 +80,12 @@ public class Product {
         this.barcode = barcode;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -100,12 +96,12 @@ public class Product {
         this.description = description;
     }
 
-    public int getQty() {
-        return qty;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQty(int qty) {
-        this.qty = qty;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public BigDecimal getPrice() {
@@ -116,12 +112,36 @@ public class Product {
         this.price = price;
     }
 
-    public String getUrlImage() {
-        return urlImage;
+    public boolean isSale() {
+        return isSale;
     }
 
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
+    public void setSale(boolean sale) {
+        isSale = sale;
+    }
+
+    public BigDecimal getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(BigDecimal discountPercentage) {
+        this.discountPercentage = discountPercentage;
+    }
+
+    public BigDecimal getPriceDiscount() {
+        return priceDiscount;
+    }
+
+    public void setPriceDiscount(BigDecimal priceDiscount) {
+        this.priceDiscount = priceDiscount;
+    }
+
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
     }
 
     public Long getMsProductIdProduct() {
@@ -130,22 +150,6 @@ public class Product {
 
     public void setMsProductIdProduct(Long msProductIdProduct) {
         this.msProductIdProduct = msProductIdProduct;
-    }
-
-    public Set<ProductDiscount> getProductDiscounts() {
-        return productDiscounts;
-    }
-
-    public void setProductDiscounts(Set<ProductDiscount> productDiscounts) {
-        this.productDiscounts = productDiscounts;
-    }
-
-    public Set<ProductTax> getProductTaxes() {
-        return productTaxes;
-    }
-
-    public void setProductTaxes(Set<ProductTax> productTaxes) {
-        this.productTaxes = productTaxes;
     }
 
     public PurchaseOrder getPurchaseOrder() {

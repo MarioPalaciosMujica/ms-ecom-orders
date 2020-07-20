@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
-public class ProductTaxModel {
+public class TaxModel {
 
-    @JsonProperty("idProductTax")
-    private Long idProductTax;
+    @JsonProperty("idTax")
+    private Long idTax;
 
     @JsonProperty("name")
     private String name;
@@ -19,6 +20,12 @@ public class ProductTaxModel {
     @JsonProperty("percentage")
     private BigDecimal percentage;
 
-    @JsonProperty("fixedAmount")
-    private BigDecimal fixedAmount;
+    @JsonProperty("isActive")
+    private boolean isActive;
+
+    @JsonProperty("created")
+    private Date created;
+
+    @JsonProperty("modified")
+    private Date modified;
 }

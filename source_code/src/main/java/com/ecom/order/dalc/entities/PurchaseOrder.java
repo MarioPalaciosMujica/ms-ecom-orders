@@ -48,11 +48,14 @@ public class PurchaseOrder {
     @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.LAZY)
     private Set<Product> products;
 
-    @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.LAZY)
-    private Set<PurchaseOrderTax> purchaseOrderTaxes;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "tbr_purchase_orders_taxes",
+            joinColumns = @JoinColumn(name = "id_purchase_order"),
+            inverseJoinColumns = @JoinColumn(name = "id_tax")
+    )
+    private Set<Tax> taxes;
 
-
-    // GETTERS AND SETTERS
 
     public Long getIdPurchaseOrder() {
         return idPurchaseOrder;
@@ -134,11 +137,11 @@ public class PurchaseOrder {
         this.products = products;
     }
 
-    public Set<PurchaseOrderTax> getPurchaseOrderTaxes() {
-        return purchaseOrderTaxes;
+    public Set<Tax> getTaxes() {
+        return taxes;
     }
 
-    public void setPurchaseOrderTaxes(Set<PurchaseOrderTax> purchaseOrderTaxes) {
-        this.purchaseOrderTaxes = purchaseOrderTaxes;
+    public void setTaxes(Set<Tax> taxes) {
+        this.taxes = taxes;
     }
 }

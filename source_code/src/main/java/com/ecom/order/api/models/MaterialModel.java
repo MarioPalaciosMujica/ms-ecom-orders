@@ -16,8 +16,8 @@ public class MaterialModel {
     @JsonProperty("barcode")
     private String barcode;
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("title")
+    private String title;
 
     @JsonProperty("description")
     private String description;

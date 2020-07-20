@@ -17,32 +17,35 @@ public class ProductModel {
     @JsonProperty("barcode")
     private String barcode;
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("title")
+    private String title;
 
     @JsonProperty("description")
     private String description;
 
-    @JsonProperty("qty")
-    private int qty;
+    @JsonProperty("quantity")
+    private int quantity;
 
     @JsonProperty("price")
     private BigDecimal price;
 
+    @JsonProperty("isSale")
+    private boolean isSale;
+
+    @JsonProperty("discountPercentage")
+    private BigDecimal discountPercentage;
+
+    @JsonProperty("priceDiscount")
+    private BigDecimal priceDiscount;
+
     @JsonProperty("image")
     private ImageModel image;
 
-    @JsonProperty("urlImage")
-    private String urlImage;
+    @JsonProperty("imageSrc")
+    private String imageSrc;
 
     @JsonProperty("msProductIdProduct")
     private Long msProductIdProduct;
-
-    @JsonProperty("productDiscounts")
-    private List<ProductDiscountModel> productDiscounts;
-
-    @JsonProperty("productTaxes")
-    private List<ProductTaxModel> productTaxes;
 
     @JsonProperty("materials")
     private List<MaterialModel> materials;

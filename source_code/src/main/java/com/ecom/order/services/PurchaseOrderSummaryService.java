@@ -34,4 +34,5 @@ public class PurchaseOrderSummaryService {
     public List<PurchaseOrderSummary> findAll(){
         return purchaseOrderSummaryRepository.findAll();
     }
+
 }

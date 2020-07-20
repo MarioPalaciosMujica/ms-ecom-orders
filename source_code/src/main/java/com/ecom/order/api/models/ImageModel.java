@@ -14,7 +14,7 @@ public class ImageModel {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("urlImage")
-    private String urlImage;
+    @JsonProperty("src")
+    private String src;
 
 }

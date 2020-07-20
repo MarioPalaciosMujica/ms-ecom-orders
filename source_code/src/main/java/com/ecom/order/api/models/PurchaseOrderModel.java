@@ -41,6 +41,6 @@ public class PurchaseOrderModel {
     @JsonProperty("products")
     private List<ProductModel> products;
 
-    @JsonProperty("purchaseOrderTaxes")
-    private List<PurchaseOrderTaxModel> purchaseOrderTaxes;
+    @JsonProperty("taxes")
+    private List<TaxModel> taxes;
 }

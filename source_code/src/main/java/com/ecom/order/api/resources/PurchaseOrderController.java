@@ -1,7 +1,9 @@
 package com.ecom.order.api.resources;
 
 import com.ecom.order.api.mapping.PurchaseOrderMap;
+import com.ecom.order.api.mapping.PurchaseOrderSummaryMap;
 import com.ecom.order.api.models.PurchaseOrderModel;
+import com.ecom.order.api.models.PurchaseOrderSummaryModel;
 import com.ecom.order.services.PurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ public class PurchaseOrderController {
 
     @Autowired private PurchaseOrderService purchaseOrderService;
     @Autowired private PurchaseOrderMap purchaseOrderMap;
+    @Autowired private PurchaseOrderSummaryMap purchaseOrderSummaryMap;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public void save(@RequestBody @NotNull PurchaseOrderModel model){
@@ -39,5 +42,10 @@ public class PurchaseOrderController {
     @RequestMapping(value = "/findAllByStatus/{idPurchaseOrderStatus}", method = RequestMethod.GET)
     public List<PurchaseOrderModel> findAllByStatus(@PathVariable @NotNull Long idPurchaseOrderStatus){
         return purchaseOrderMap.toModelList(purchaseOrderService.findAllByStatus(idPurchaseOrderStatus));
+    }
+
+    @RequestMapping(value = "/calculateSummary", method = RequestMethod.GET)
+    public PurchaseOrderSummaryModel calculateSummary(@RequestBody @NotNull PurchaseOrderModel model){
+        return purchaseOrderSummaryMap.toModel(purchaseOrderService.calculateSummary(purchaseOrderMap.toEntity(model)));
     }
 }

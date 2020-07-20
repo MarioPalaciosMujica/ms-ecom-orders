@@ -21,9 +21,9 @@ public class Material {
     @Size(max = 13, message = "barcode size not valid")
     private String barcode;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "title", nullable = false)
     @Size(min = 2, max = 50, message = "name size not valid")
-    private String name;
+    private String title;
 
     @Column(name = "description")
     @Size(max = 255, message = "description size not valid")
@@ -59,12 +59,12 @@ public class Material {
         this.barcode = barcode;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {

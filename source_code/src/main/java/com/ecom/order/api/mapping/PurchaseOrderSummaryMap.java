@@ -13,7 +13,7 @@ public class PurchaseOrderSummaryMap {
     public PurchaseOrderSummaryModel toModel(PurchaseOrderSummary entity){
         if(entity != null){
             PurchaseOrderSummaryModel model = new PurchaseOrderSummaryModel();
-            model.setIdOrderSummary(entity.getIdOrderSummary());
+            model.setIdPurchaseOrderSummary(entity.getIdPurchaseOrderSummary());
             model.setSubTotal(entity.getSubTotal());
             model.setTaxTotal(entity.getTaxTotal());
             model.setShipmentCost(entity.getShipmentCost());
@@ -29,7 +29,7 @@ public class PurchaseOrderSummaryMap {
     public PurchaseOrderSummary toEntity(PurchaseOrderSummaryModel model){
         if(model != null){
             PurchaseOrderSummary entity = new PurchaseOrderSummary();
-            entity.setIdOrderSummary(model.getIdOrderSummary());
+            entity.setIdPurchaseOrderSummary(model.getIdPurchaseOrderSummary());
             entity.setSubTotal(model.getSubTotal());
             entity.setTaxTotal(model.getTaxTotal());
             entity.setShipmentCost(model.getShipmentCost());

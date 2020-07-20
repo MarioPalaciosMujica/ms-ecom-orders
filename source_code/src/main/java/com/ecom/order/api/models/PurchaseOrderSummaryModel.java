@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class PurchaseOrderSummaryModel {
 
-    @JsonProperty("idOrderSummary")
-    private Long idOrderSummary;
+    @JsonProperty("idPurchaseOrderSummary")
+    private Long idPurchaseOrderSummary;
 
     @JsonProperty("subTotal")
     private BigDecimal subTotal;

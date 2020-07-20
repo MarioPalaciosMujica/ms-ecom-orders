@@ -16,7 +16,7 @@ public class PurchaseOrderMap {
 
     @Autowired private PurchaseOrderSummaryMap purchaseOrderSummaryMap;
     @Autowired private PurchaseOrderStatusMap purchaseOrderStatusMap;
-    @Autowired private PurchaseOrderCouponMap purchaseOrderCouponMap;
+    @Autowired private CouponMap couponMap;
     @Autowired private TaxMap taxMap;
     @Autowired private ProductMap productMap;
 
@@ -31,7 +31,7 @@ public class PurchaseOrderMap {
             model.setPurchaseOrderSummary(purchaseOrderSummaryMap.toModel(entity.getPurchaseOrderSummary()));
             model.setMsUserAccountsIdAccount(entity.getMsUserAccountsIdAccount());
             model.setPurchaseOrderStatus(purchaseOrderStatusMap.toModel(entity.getPurchaseOrderStatus()));
-            model.setPurchaseOrderCoupon(purchaseOrderCouponMap.toModel(entity.getPurchaseOrderCoupon()));
+            model.setCoupon(couponMap.toModel(entity.getCoupon()));
             model.setProducts(productMap.toModelList(new ArrayList<>(entity.getProducts())));
             model.setTaxes(taxMap.toModelList(new ArrayList<>(entity.getTaxes())));
             return model;
@@ -51,7 +51,7 @@ public class PurchaseOrderMap {
             entity.setPurchaseOrderSummary(purchaseOrderSummaryMap.toEntity(model.getPurchaseOrderSummary()));
             entity.setPurchaseOrderStatus(purchaseOrderStatusMap.toEntity(model.getPurchaseOrderStatus()));
             entity.setMsUserAccountsIdAccount(model.getMsUserAccountsIdAccount());
-            entity.setPurchaseOrderCoupon(purchaseOrderCouponMap.toEntity(model.getPurchaseOrderCoupon()));
+            entity.setCoupon(couponMap.toEntity(model.getCoupon()));
             entity.setProducts(new HashSet<>(productMap.toEntityList(model.getProducts())));
             entity.setTaxes(new HashSet<>(taxMap.toEntityList(model.getTaxes())));
             return entity;

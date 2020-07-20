@@ -14,8 +14,7 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/Material")
 public class MaterialController {
 
-    @Autowired
-    private MaterialService materialService;
+    @Autowired private MaterialService materialService;
     @Autowired private MaterialMap materialMap;
 
     @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE)

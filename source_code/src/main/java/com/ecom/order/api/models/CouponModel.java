@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
-public class PurchaseOrderCouponModel {
+public class CouponModel {
 
-    @JsonProperty("idPurchaseOrderCoupon")
-    private Long idPurchaseOrderCoupon;
+    @JsonProperty("idCoupon")
+    private Long idCoupon;
 
     @JsonProperty("code")
     private String code;
@@ -19,15 +20,24 @@ public class PurchaseOrderCouponModel {
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("description")
+    private String description;
+
     @JsonProperty("percentage")
     private BigDecimal percentage;
 
     @JsonProperty("fixedAmount")
     private BigDecimal fixedAmount;
 
-    @JsonProperty("totalAmount")
-    private BigDecimal totalAmount;
+    @JsonProperty("expirationDate")
+    private String expirationDate;
 
-    @JsonProperty("msProductIdCoupon")
-    private Long msProductIdCoupon;
+    @JsonProperty("isActive")
+    private boolean isActive;
+
+    @JsonProperty("created")
+    private String created;
+
+    @JsonProperty("modified")
+    private String modified;
 }

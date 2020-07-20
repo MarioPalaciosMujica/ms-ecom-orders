@@ -13,7 +13,7 @@ public class PurchaseOrderSummary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_purchase_order_summary", updatable = false, nullable = false, unique = true)
-    private Long idOrderSummary;
+    private Long idPurchaseOrderSummary;
 
     @Column(name = "sub_total", nullable = false)
     private BigDecimal subTotal;
@@ -34,14 +34,13 @@ public class PurchaseOrderSummary {
     private PurchaseOrder purchaseOrder;
 
 
-    // GETTERS AND SETTERS
 
-    public Long getIdOrderSummary() {
-        return idOrderSummary;
+    public Long getIdPurchaseOrderSummary() {
+        return idPurchaseOrderSummary;
     }
 
-    public void setIdOrderSummary(Long idOrderSummary) {
-        this.idOrderSummary = idOrderSummary;
+    public void setIdPurchaseOrderSummary(Long idPurchaseOrderSummary) {
+        this.idPurchaseOrderSummary = idPurchaseOrderSummary;
     }
 
     public BigDecimal getSubTotal() {

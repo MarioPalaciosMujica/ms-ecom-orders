@@ -13,8 +13,7 @@ import java.util.List;
 @RequestMapping("/PurchaseOrderStatus")
 public class PurchaseOrderStatusController {
 
-    @Autowired
-    private PurchaseOrderStatusService purchaseOrderStatusService;
+    @Autowired private PurchaseOrderStatusService purchaseOrderStatusService;
     @Autowired private PurchaseOrderStatusMap purchaseOrderStatusMap;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)

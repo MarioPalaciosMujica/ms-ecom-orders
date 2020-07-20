@@ -41,9 +41,9 @@ public class PurchaseOrder {
     @JoinColumn(name = "id_purchase_order_status")
     private PurchaseOrderStatus purchaseOrderStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_purchase_order_coupon")
-    private PurchaseOrderCoupon purchaseOrderCoupon;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_coupon")
+    private Coupon coupon;
 
     @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.LAZY)
     private Set<Product> products;
@@ -121,12 +121,12 @@ public class PurchaseOrder {
         this.purchaseOrderStatus = purchaseOrderStatus;
     }
 
-    public PurchaseOrderCoupon getPurchaseOrderCoupon() {
-        return purchaseOrderCoupon;
+    public Coupon getCoupon() {
+        return coupon;
     }
 
-    public void setPurchaseOrderCoupon(PurchaseOrderCoupon purchaseOrderCoupon) {
-        this.purchaseOrderCoupon = purchaseOrderCoupon;
+    public void setCoupon(Coupon coupon) {
+        this.coupon = coupon;
     }
 
     public Set<Product> getProducts() {

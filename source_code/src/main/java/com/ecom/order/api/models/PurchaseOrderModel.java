@@ -35,8 +35,8 @@ public class PurchaseOrderModel {
     @JsonProperty("purchaseOrderStatus")
     private PurchaseOrderStatusModel purchaseOrderStatus;
 
-    @JsonProperty("purchaseOrderCoupon")
-    private PurchaseOrderCouponModel purchaseOrderCoupon;
+    @JsonProperty("coupon")
+    private CouponModel coupon;
 
     @JsonProperty("products")
     private List<ProductModel> products;

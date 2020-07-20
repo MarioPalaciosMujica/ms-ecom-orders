@@ -21,7 +21,7 @@ public class PurchaseOrderService {
 
     @Autowired private IPurchaseOrderRepository purchaseOrderRepository;
     @Autowired private PurchaseOrderSummaryService purchaseOrderSummaryService;
-    @Autowired private PurchaseOrderCouponService purchaseOrderCouponService;
+    @Autowired private CouponService couponService;
     @Autowired private ProductService productService;
     @Autowired private CurrencyCLP currencyCLP;
 
@@ -30,8 +30,8 @@ public class PurchaseOrderService {
         entity.setCreated(new Date());
         entity.setModified(null);
         entity.setPurchaseOrderSummary(purchaseOrderSummaryService.save(entity.getPurchaseOrderSummary()));
-        if(entity.getPurchaseOrderCoupon() != null){
-            entity.setPurchaseOrderCoupon(purchaseOrderCouponService.save(entity.getPurchaseOrderCoupon()));
+        if(entity.getCoupon() != null){
+            entity.setCoupon(couponService.save(entity.getCoupon()));
         }
 
         Set<Product> productSet = entity.getProducts();
@@ -103,13 +103,13 @@ public class PurchaseOrderService {
         }
 
         // coupons
-        if(order.getPurchaseOrderCoupon() != null){
-            if(order.getPurchaseOrderCoupon().getPercentage() != null){
-                summary.setDiscountTotal(summary.getDiscountTotal().add(currencyCLP.calculateAmountByPercentage(summary.getSubTotal(), order.getPurchaseOrderCoupon().getPercentage())));
+        if(order.getCoupon() != null){
+            if(order.getCoupon().getPercentage() != null){
+                summary.setDiscountTotal(summary.getDiscountTotal().add(currencyCLP.calculateAmountByPercentage(summary.getSubTotal(), order.getCoupon().getPercentage())));
 
             }
             else{
-                summary.setDiscountTotal(order.getPurchaseOrderCoupon().getFixedAmount());
+                summary.setDiscountTotal(order.getCoupon().getFixedAmount());
             }
         }
 

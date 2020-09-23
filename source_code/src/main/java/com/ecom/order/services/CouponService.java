@@ -42,6 +42,7 @@ public class CouponService {
         if(original != null){
             entity.setCreated(original.getCreated());
             entity.setModified(new Date());
+            couponRepository.save(entity);
             return true;
         }
         else {

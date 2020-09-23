@@ -87,12 +87,8 @@ public class PurchaseOrderService {
 
         // products
         for (Product product : order.getProducts()){
-            if(product.isSale()){
-                summary.setSubTotal(summary.getSubTotal().add(product.getPriceDiscount().multiply(new BigDecimal(product.getQuantity()))));
-            }
-            else{
-                summary.setSubTotal(summary.getSubTotal().add(product.getPrice().multiply(new BigDecimal(product.getQuantity()))));
-            }
+            summary.setSubTotal(summary.getSubTotal().add(product.getCurrentTotalPrice().multiply(new BigDecimal(product.getQuantity()))));
+            //TODO: add logic for products on sale
         }
 
         // taxes
@@ -112,6 +108,9 @@ public class PurchaseOrderService {
                 summary.setDiscountTotal(order.getCoupon().getFixedAmount());
             }
         }
+
+        //TODO: add shipment cost
+        //TODO: add option cost
 
         // total
         summary.setTotal(

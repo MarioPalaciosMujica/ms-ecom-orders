@@ -18,22 +18,19 @@ public class Product {
     private Long idProduct;
 
     @Column(name = "barcode")
-    @Size(max = 13, message = "barcode size invalid")
+    @Size(max = 13)
     private String barcode;
 
     @Column(name = "title", nullable = false)
-    @Size(min = 2, max = 50, message = "name size invalid")
+    @Size(min = 2, max = 50)
     private String title;
 
     @Column(name = "description")
-    @Size(max = 1000, message = "description size not valid")
+    @Size(max = 1000)
     private String description;
 
     @Column(name = "quantity", nullable = false)
     private int quantity;
-
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
 
     @Column(name = "is_sale", nullable = false)
     private boolean isSale;
@@ -41,11 +38,17 @@ public class Product {
     @Column(name = "discount_percentage")
     private BigDecimal discountPercentage;
 
-    @Column(name = "price_discount")
-    private BigDecimal priceDiscount;
+    @Column(name = "current_base_price")
+    private BigDecimal currentBasePrice;
+
+    @Column(name = "current_total_price")
+    private BigDecimal currentTotalPrice;
+
+    @Column(name = "is_capacity_qty", nullable = false)
+    private boolean isCapacityQty;
 
     @Column(name = "image_src")
-    @Size(max = 255, message = "imageSrc size invalid")
+    @Size(max = 255)
     private String imageSrc;
 
     @Column(name = "ms_product_id_product")
@@ -55,13 +58,9 @@ public class Product {
     @JoinColumn(name = "id_purchase_order")
     private PurchaseOrder purchaseOrder;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "tbr_products_materials",
-            joinColumns = @JoinColumn(name = "id_product"),
-            inverseJoinColumns = @JoinColumn(name = "id_material")
-    )
-    private Set<Material> materials;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_variant")
+    private Variant variant;
 
 
     public Long getIdProduct() {
@@ -104,14 +103,6 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public boolean isSale() {
         return isSale;
     }
@@ -128,12 +119,28 @@ public class Product {
         this.discountPercentage = discountPercentage;
     }
 
-    public BigDecimal getPriceDiscount() {
-        return priceDiscount;
+    public BigDecimal getCurrentBasePrice() {
+        return currentBasePrice;
     }
 
-    public void setPriceDiscount(BigDecimal priceDiscount) {
-        this.priceDiscount = priceDiscount;
+    public void setCurrentBasePrice(BigDecimal currentBasePrice) {
+        this.currentBasePrice = currentBasePrice;
+    }
+
+    public BigDecimal getCurrentTotalPrice() {
+        return currentTotalPrice;
+    }
+
+    public void setCurrentTotalPrice(BigDecimal currentTotalPrice) {
+        this.currentTotalPrice = currentTotalPrice;
+    }
+
+    public boolean isCapacityQty() {
+        return isCapacityQty;
+    }
+
+    public void setCapacityQty(boolean capacityQty) {
+        isCapacityQty = capacityQty;
     }
 
     public String getImageSrc() {
@@ -160,11 +167,11 @@ public class Product {
         this.purchaseOrder = purchaseOrder;
     }
 
-    public Set<Material> getMaterials() {
-        return materials;
+    public Variant getVariant() {
+        return variant;
     }
 
-    public void setMaterials(Set<Material> materials) {
-        this.materials = materials;
+    public void setVariant(Variant variant) {
+        this.variant = variant;
     }
 }

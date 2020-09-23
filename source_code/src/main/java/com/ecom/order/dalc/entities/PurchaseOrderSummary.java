@@ -34,7 +34,6 @@ public class PurchaseOrderSummary {
     private PurchaseOrder purchaseOrder;
 
 
-
     public Long getIdPurchaseOrderSummary() {
         return idPurchaseOrderSummary;
     }

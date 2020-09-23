@@ -40,4 +40,10 @@ public class CouponController {
     public void deleteById(@PathVariable @NotNull Long id){
         couponService.deleteById(id);
     }
+
+    @RequestMapping(value = "/findActiveByCode/{code}", method = RequestMethod.GET)
+    public CouponModel findActiveByCode(@PathVariable @NotNull String code){
+        return couponMap.toModel(couponService.findActiveByCode(code));
+    }
+
 }

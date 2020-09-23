@@ -9,25 +9,25 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "tbl_purchase_order_coupons")
+@Table(name = "tbl_coupons")
 @NoArgsConstructor
 public class Coupon {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCoupon", updatable = false, nullable = false, unique = true)
+    @Column(name = "id_coupon", updatable = false, nullable = false, unique = true)
     private Long idCoupon;
 
-    @Column(name = "code")
-    @Size(max = 50, message = "code size invalid")
+    @Column(name = "code", nullable = false, unique = true)
+    @Size(max = 50)
     private String code;
 
-    @Column(name = "name", nullable = false)
-    @Size(min = 2, max = 50, message = "name size invalid")
+    @Column(name = "name", nullable = false, unique = true)
+    @Size(min = 2, max = 50)
     private String name;
 
     @Column(name = "description")
-    @Size(max = 255, message = "description size not valid")
+    @Size(max = 255)
     private String description;
 
     @Column(name = "percentage")
@@ -48,7 +48,12 @@ public class Coupon {
     @Column(name = "modified")
     private Date modified;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "coupon")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "tbr_purchase_orders_coupons",
+            joinColumns = @JoinColumn(name = "id_coupon"),
+            inverseJoinColumns = @JoinColumn(name = "id_purchase_order")
+    )
     private Set<PurchaseOrder> purchaseOrders;
 
 

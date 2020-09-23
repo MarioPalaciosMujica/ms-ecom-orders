@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "tbl_purchase_order_taxes")
+@Table(name = "tbl_taxes")
 @NoArgsConstructor
 public class Tax {
 
@@ -18,9 +18,9 @@ public class Tax {
     @Column(name = "id_tax", updatable = false, nullable = false, unique = true)
     private Long idTax;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "tax_name", nullable = false)
     @Size(min = 2, max = 50, message = "name size not valid")
-    private String name;
+    private String taxName;
 
     @Column(name = "percentage")
     private BigDecimal percentage;
@@ -34,14 +34,13 @@ public class Tax {
     @Column(name = "modified")
     private Date modified;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "tbr_purchase_orders_taxes",
             joinColumns = @JoinColumn(name = "id_tax"),
             inverseJoinColumns = @JoinColumn(name = "id_purchase_order")
     )
     private Set<PurchaseOrder> purchaseOrders;
-
 
 
     public Long getIdTax() {
@@ -52,12 +51,12 @@ public class Tax {
         this.idTax = idTax;
     }
 
-    public String getName() {
-        return name;
+    public String getTaxName() {
+        return taxName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTaxName(String taxName) {
+        this.taxName = taxName;
     }
 
     public BigDecimal getPercentage() {

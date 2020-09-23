@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "tbl_purchase_order_status")
+@Table(name = "tbl_purchase_order_statuses")
 @NoArgsConstructor
 public class PurchaseOrderStatus {
 
@@ -17,15 +17,15 @@ public class PurchaseOrderStatus {
     @Column(name = "id_purchase_order_status", updatable = false, nullable = false, unique = true)
     private Long idPurchaseOrderStatus;
 
-    @Column(name = "name", nullable = false, unique = true)
-    @Size(min = 2, max = 50, message = "name size not valid")
-    private String name;
+    @Column(name = "status_name", nullable = false, unique = true)
+    @Size(min = 2, max = 50)
+    private String statusName;
 
     @Column(name = "description")
-    @Size(max = 255, message = "description size not valid")
+    @Size(max = 255)
     private String description;
 
-    @Column(name = "stage")
+    @Column(name = "stage", unique = true)
     private int stage;
 
     @Column(name = "created", nullable = false)
@@ -38,8 +38,6 @@ public class PurchaseOrderStatus {
     private Set<PurchaseOrder> purchaseOrders;
 
 
-    // GETTERS AND SETTERS
-
     public Long getIdPurchaseOrderStatus() {
         return idPurchaseOrderStatus;
     }
@@ -48,12 +46,12 @@ public class PurchaseOrderStatus {
         this.idPurchaseOrderStatus = idPurchaseOrderStatus;
     }
 
-    public String getName() {
-        return name;
+    public String getStatusName() {
+        return statusName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 
     public String getDescription() {

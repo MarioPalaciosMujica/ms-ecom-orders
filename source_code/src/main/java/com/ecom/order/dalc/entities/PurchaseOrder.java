@@ -18,11 +18,14 @@ public class PurchaseOrder {
     private Long idPurchaseOrder;
 
     @Column(name = "code")
-    @Size(max = 13, message = "code size invalid")
+    @Size(max = 13)
     private String code;
 
-    @Column(name = "is_order_paid", nullable = false)
-    private boolean isOrderPaid;
+    @Column(name = "id_session", nullable = false)
+    private String idSession;
+
+    @Column(name = "id_transaction")
+    private Long idTransaction;
 
     @Column(name = "created", nullable = false)
     private Date created;
@@ -37,9 +40,17 @@ public class PurchaseOrder {
     @JoinColumn(name = "id_purchase_order_summary")
     private PurchaseOrderSummary purchaseOrderSummary;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_shipment")
+    private Shipment shipment;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_purchase_order_status")
     private PurchaseOrderStatus purchaseOrderStatus;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_payment_status")
+    private PaymentStatus paymentStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_coupon")
@@ -48,13 +59,21 @@ public class PurchaseOrder {
     @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.LAZY)
     private Set<Product> products;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "tbr_purchase_orders_taxes",
             joinColumns = @JoinColumn(name = "id_purchase_order"),
             inverseJoinColumns = @JoinColumn(name = "id_tax")
     )
     private Set<Tax> taxes;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "tbr_purchase_orders_coupons",
+            joinColumns = @JoinColumn(name = "id_purchase_order"),
+            inverseJoinColumns = @JoinColumn(name = "id_coupon")
+    )
+    private Set<Coupon> coupons;
 
 
     public Long getIdPurchaseOrder() {
@@ -73,12 +92,20 @@ public class PurchaseOrder {
         this.code = code;
     }
 
-    public boolean isOrderPaid() {
-        return isOrderPaid;
+    public String getIdSession() {
+        return idSession;
     }
 
-    public void setOrderPaid(boolean orderPaid) {
-        isOrderPaid = orderPaid;
+    public void setIdSession(String idSession) {
+        this.idSession = idSession;
+    }
+
+    public Long getIdTransaction() {
+        return idTransaction;
+    }
+
+    public void setIdTransaction(Long idTransaction) {
+        this.idTransaction = idTransaction;
     }
 
     public Date getCreated() {
@@ -113,12 +140,28 @@ public class PurchaseOrder {
         this.purchaseOrderSummary = purchaseOrderSummary;
     }
 
+    public Shipment getShipment() {
+        return shipment;
+    }
+
+    public void setShipment(Shipment shipment) {
+        this.shipment = shipment;
+    }
+
     public PurchaseOrderStatus getPurchaseOrderStatus() {
         return purchaseOrderStatus;
     }
 
     public void setPurchaseOrderStatus(PurchaseOrderStatus purchaseOrderStatus) {
         this.purchaseOrderStatus = purchaseOrderStatus;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public Coupon getCoupon() {
@@ -143,5 +186,13 @@ public class PurchaseOrder {
 
     public void setTaxes(Set<Tax> taxes) {
         this.taxes = taxes;
+    }
+
+    public Set<Coupon> getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(Set<Coupon> coupons) {
+        this.coupons = coupons;
     }
 }

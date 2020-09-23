@@ -59,4 +59,14 @@ public class CouponService {
         }
     }
 
+    public Coupon findActiveByCode(String code){
+        Optional<Coupon> entity = couponRepository.findActiveByCode(code);
+        if(entity.isPresent()){
+            return entity.get();
+        }
+        else{
+            return null;
+        }
+    }
+
 }

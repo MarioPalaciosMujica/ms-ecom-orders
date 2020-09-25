@@ -2,15 +2,18 @@ package com.ecom.order.api.mapping;
 
 import com.ecom.order.api.models.CouponModel;
 import com.ecom.order.dalc.entities.Coupon;
+import com.ecom.order.tools.DateFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Component
 public class CouponMap {
+
+    @Autowired private DateFormat dateFormat;
 
     public CouponModel toModel(Coupon entity){
         if(entity != null){
@@ -21,10 +24,10 @@ public class CouponMap {
             model.setDescription(entity.getDescription());
             model.setPercentage(entity.getPercentage());
             model.setFixedAmount(entity.getFixedAmount());
-            model.setExpirationDate(this.dateToString(entity.getExpirationDate()));
+            model.setExpirationDate(dateFormat.dateToString(entity.getExpirationDate()));
             model.setActive(entity.isActive());
-            model.setCreated(this.dateToString(entity.getCreated()));
-            model.setModified(this.dateToString(entity.getModified()));
+            model.setCreated(dateFormat.dateToString(entity.getCreated()));
+            model.setModified(dateFormat.dateToString(entity.getModified()));
             return model;
         }
         else{
@@ -41,7 +44,7 @@ public class CouponMap {
             entity.setDescription(model.getDescription());
             entity.setPercentage(model.getPercentage());
             entity.setFixedAmount(model.getFixedAmount());
-//            entity.setExpirationDate(this.dateToString(model.getExpirationDate()));
+            entity.setExpirationDate(dateFormat.datePickerToDate(model.getExpirationDate()));
             entity.setActive(model.isActive());
             return entity;
         }
@@ -64,10 +67,5 @@ public class CouponMap {
             entityList.add(this.toEntity(model));
         }
         return entityList;
-    }
-
-    private String dateToString(Date date){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        return formatter.format(date);
     }
 }

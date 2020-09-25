@@ -53,4 +53,26 @@ public class PaymentStatusService {
             return false;
         }
     }
+
+    public PaymentStatus findByResponseCode(String responseCode){
+        Optional<PaymentStatus> entity = paymentStatusRepository.findByResponseCode(responseCode);
+        if(entity.isPresent()){
+            return entity.get();
+        }
+        else{
+            return null;
+        }
+    }
+
+    public PaymentStatus findByResponseCodeAndPaymentMethod(String responseCode, String paymentMethod){
+        Optional<PaymentStatus> entity = paymentStatusRepository.findByResponseCodeAndPaymentMethod(
+                responseCode.trim().toUpperCase(),
+                paymentMethod.trim().toUpperCase());
+        if(entity.isPresent()){
+            return entity.get();
+        }
+        else{
+            return null;
+        }
+    }
 }

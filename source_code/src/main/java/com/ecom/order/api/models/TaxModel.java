@@ -14,8 +14,8 @@ public class TaxModel {
     @JsonProperty("idTax")
     private Long idTax;
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("tax_name")
+    private String taxName;
 
     @JsonProperty("percentage")
     private BigDecimal percentage;

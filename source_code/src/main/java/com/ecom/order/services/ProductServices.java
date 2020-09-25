@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductService {
+public class ProductServices {
 
     @Autowired private IProductRepository productRepository;
     @Autowired private TaxService taxService;

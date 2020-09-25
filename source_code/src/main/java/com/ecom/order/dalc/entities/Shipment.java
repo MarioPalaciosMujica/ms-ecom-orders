@@ -34,6 +34,10 @@ public class Shipment {
     @Size(max = 255)
     private String address;
 
+    @Column(name = "zip_code")
+    @Size(max = 50)
+    private String zipCode;
+
     @Column(name = "shipment_price_amount")
     private BigDecimal shipmentPriceAmount;
 
@@ -79,6 +83,14 @@ public class Shipment {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public BigDecimal getShipmentPriceAmount() {

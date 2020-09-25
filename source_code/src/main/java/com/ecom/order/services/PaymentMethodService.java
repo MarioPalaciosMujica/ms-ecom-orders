@@ -53,4 +53,14 @@ public class PaymentMethodService {
             return false;
         }
     }
+
+    public PaymentMethod findByCode(String code){
+        Optional<PaymentMethod> entity = paymentMethodRepository.findByCode(code);
+        if(entity.isPresent()){
+            return entity.get();
+        }
+        else{
+            return null;
+        }
+    }
 }

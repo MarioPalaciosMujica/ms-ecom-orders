@@ -30,10 +30,13 @@ public class Variant {
     @Column(name = "clients_capacity")
     private Integer clientsCapacity;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "variant")
+    @Column(name = "is_selected")
+    private boolean isSelected;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "variant", cascade = CascadeType.ALL)
     private Product product;
 
-    @OneToMany(mappedBy = "variant", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "variant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Option> options;
 
 
@@ -75,6 +78,14 @@ public class Variant {
 
     public void setClientsCapacity(Integer clientsCapacity) {
         this.clientsCapacity = clientsCapacity;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     public Product getProduct() {

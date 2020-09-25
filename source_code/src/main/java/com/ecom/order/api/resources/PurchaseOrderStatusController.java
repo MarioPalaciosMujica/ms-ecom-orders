@@ -41,4 +41,9 @@ public class PurchaseOrderStatusController {
         purchaseOrderStatusService.deleteById(id);
     }
 
+    @RequestMapping(value = "/findByCode/{code}", method = RequestMethod.GET)
+    public PurchaseOrderStatusModel findByCode(@PathVariable @NotNull String code){
+        return purchaseOrderStatusMap.toModel(purchaseOrderStatusService.findByCode(code));
+    }
+
 }

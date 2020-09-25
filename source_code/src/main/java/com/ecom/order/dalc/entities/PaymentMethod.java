@@ -18,7 +18,11 @@ public class PaymentMethod {
     @Column(name = "id_payment_method", updatable = false, nullable = false, unique = true)
     private Long idPaymentMethod;
 
-    @Column(name = "paymentMethodName", nullable = false)
+    @Column(name = "payment_method_code", nullable = false, unique = true)
+    @Size(max = 10)
+    private String paymentMethodCode;
+
+    @Column(name = "payment_method_name", nullable = false, unique = true)
     @Size(max = 50)
     private String paymentMethodName;
 
@@ -32,6 +36,14 @@ public class PaymentMethod {
 
     public void setIdPaymentMethod(Long idPaymentMethod) {
         this.idPaymentMethod = idPaymentMethod;
+    }
+
+    public String getPaymentMethodCode() {
+        return paymentMethodCode;
+    }
+
+    public void setPaymentMethodCode(String paymentMethodCode) {
+        this.paymentMethodCode = paymentMethodCode;
     }
 
     public String getPaymentMethodName() {

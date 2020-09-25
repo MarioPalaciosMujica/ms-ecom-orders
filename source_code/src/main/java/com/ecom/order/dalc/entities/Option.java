@@ -25,7 +25,7 @@ public class Option {
     @Column(name = "amount_percentage")
     private BigDecimal amountPercentage;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_variant")
     private Variant variant;
 

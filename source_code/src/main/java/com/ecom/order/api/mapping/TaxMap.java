@@ -14,7 +14,7 @@ public class TaxMap {
         if(entity != null){
             TaxModel model = new TaxModel();
             model.setIdTax(entity.getIdTax());
-            model.setName(entity.getName());
+            model.setTaxName(entity.getTaxName());
             model.setPercentage(entity.getPercentage());
             return model;
         }
@@ -27,7 +27,7 @@ public class TaxMap {
         if(model != null){
             Tax entity = new Tax();
             entity.setIdTax(model.getIdTax());
-            entity.setName(model.getName());
+            entity.setTaxName(model.getTaxName());
             entity.setPercentage(model.getPercentage());
             return entity;
         }

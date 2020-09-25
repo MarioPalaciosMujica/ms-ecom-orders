@@ -1,9 +1,6 @@
 package com.ecom.order.services;
 
-import com.ecom.order.dalc.entities.Product;
-import com.ecom.order.dalc.entities.PurchaseOrder;
-import com.ecom.order.dalc.entities.PurchaseOrderSummary;
-import com.ecom.order.dalc.entities.Tax;
+import com.ecom.order.dalc.entities.*;
 import com.ecom.order.dalc.repositories.IPurchaseOrderRepository;
 import com.ecom.order.tools.CurrencyCLP;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,36 +11,41 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class PurchaseOrderService {
 
     @Autowired private IPurchaseOrderRepository purchaseOrderRepository;
     @Autowired private PurchaseOrderSummaryService purchaseOrderSummaryService;
+    @Autowired private PurchaseOrderStatusService purchaseOrderStatusService;
+    @Autowired private PaymentStatusService paymentStatusService;
     @Autowired private CouponService couponService;
-    @Autowired private ProductService productService;
     @Autowired private CurrencyCLP currencyCLP;
 
-    public PurchaseOrder save(PurchaseOrder entity){
+    public BuyOrder save(PurchaseOrder entity){
         entity.setIdPurchaseOrder(null);
         entity.setCreated(new Date());
         entity.setModified(null);
-        entity.setPurchaseOrderSummary(purchaseOrderSummaryService.save(entity.getPurchaseOrderSummary()));
-        if(entity.getCoupon() != null){
-            entity.setCoupon(couponService.save(entity.getCoupon()));
-        }
+        entity.setPurchaseOrderSummary(purchaseOrderSummaryService.save(this.calculateSummary(entity)));
+        entity.setPurchaseOrderStatus(purchaseOrderStatusService.findByCode("PP"));
+        entity.setPaymentStatus(paymentStatusService.findByResponseCode("PP"));
+        entity.setIdSession("mi-id-de-sesion"); // MOCK
 
-        Set<Product> productSet = entity.getProducts();
-        entity.setProducts(null);
-        entity = purchaseOrderRepository.save(entity);
-
-        for (Product product : productSet){
+        for (Product product : entity.getProducts()){
+            product.setMsProductIdProduct(product.getIdProduct());
+            product.setIdProduct(null);
             product.setPurchaseOrder(entity);
-            productService.save(product);
+            product.getVariant().setIdVariant(null);
+            for (Option option : product.getVariant().getOptions()){
+                option.setIdOption(null);
+                option.setVariant(product.getVariant());
+            }
         }
-        return entity;
+
+        entity = purchaseOrderRepository.save(entity);
+        return new BuyOrder(entity.getPurchaseOrderSummary().getTotal(), entity.getIdSession(), entity.getIdPurchaseOrder().toString());
     }
+
 
     public PurchaseOrder findById(@NotNull Long id){
         Optional<PurchaseOrder> entity = purchaseOrderRepository.findById(id);
@@ -59,17 +61,36 @@ public class PurchaseOrderService {
         return purchaseOrderRepository.findAll();
     }
 
-    public boolean update(@NotNull PurchaseOrder entity){
-        PurchaseOrder original = this.findById(entity.getIdPurchaseOrder());
-        if(original != null){
-            entity.setProducts(null);
-            entity.setCreated(original.getCreated());
-            entity.setModified(new Date());
-            purchaseOrderRepository.save(entity);
-            return true;
-        }
-        else {
-            return false;
+    public void update(@NotNull PurchaseOrder entity){
+        entity.setProducts(null);
+        entity.setModified(new Date());
+        purchaseOrderRepository.save(entity);
+    }
+
+    //TODO: update to payment transaction
+    public void updatePaymentTransaction(ResultTransactionMessage result){
+        PurchaseOrder order = this.findById(Long.parseLong(result.getBuyOrder()));
+        PaymentStatus payStatus = paymentStatusService.findByResponseCodeAndPaymentMethod(result.getResponseCode(), result.getPaymentModuleCode());
+        PurchaseOrderStatus orderStatus = null;
+        if(order != null){
+            if(payStatus != null){
+                order.setPaymentStatus(payStatus);
+                if(payStatus.isPaid()){
+                    orderStatus = purchaseOrderStatusService.findByCode("AP");
+                    if(orderStatus != null){
+                        order.setPurchaseOrderStatus(orderStatus);
+                    }
+                }
+            }
+            else{
+                payStatus = paymentStatusService.findByResponseCode("NS");
+                if(payStatus != null){
+                    order.setPaymentStatus(payStatus);
+                }
+            }
+            order.setIdTransaction(result.getIdTransaction());
+            order.setTransactionDate(result.getTransactionDate());
+            this.update(order);
         }
     }
 
@@ -92,11 +113,17 @@ public class PurchaseOrderService {
         }
 
         // taxes
-        for (Tax tax : order.getTaxes()){
-            if(tax.getPercentage() != null && tax.getPercentage().compareTo(new BigDecimal(0)) == 1){
-                summary.setTaxTotal(summary.getTaxTotal().add(currencyCLP.calculateAmountByPercentage(summary.getSubTotal(), tax.getPercentage())));
+        if(order.getTaxes() != null){
+            for (Tax tax : order.getTaxes()){
+                if(tax.getPercentage() != null && tax.getPercentage().compareTo(new BigDecimal(0)) == 1){
+                    summary.setTaxTotal(summary.getTaxTotal().add(currencyCLP.calculateAmountByPercentage(summary.getSubTotal(), tax.getPercentage())));
+                }
             }
         }
+        else{
+            summary.setTaxTotal(new BigDecimal(0));
+        }
+
 
         // coupons
         if(order.getCoupon() != null){
@@ -108,8 +135,12 @@ public class PurchaseOrderService {
                 summary.setDiscountTotal(order.getCoupon().getFixedAmount());
             }
         }
+        else{
+            summary.setDiscountTotal(new BigDecimal(0));
+        }
 
         //TODO: add shipment cost
+
         //TODO: add option cost
 
         // total

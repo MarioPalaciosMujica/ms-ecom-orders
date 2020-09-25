@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Set;
 
 @Entity
 @Table(name = "tbl_products")
@@ -54,11 +53,11 @@ public class Product {
     @Column(name = "ms_product_id_product")
     private Long msProductIdProduct;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_purchase_order")
     private PurchaseOrder purchaseOrder;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_variant")
     private Variant variant;
 

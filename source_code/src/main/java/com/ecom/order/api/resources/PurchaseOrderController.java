@@ -1,9 +1,13 @@
 package com.ecom.order.api.resources;
 
+import com.ecom.order.api.mapping.BuyOrderMap;
 import com.ecom.order.api.mapping.PurchaseOrderMap;
 import com.ecom.order.api.mapping.PurchaseOrderSummaryMap;
+import com.ecom.order.api.mapping.ResultTransactionMessageMap;
+import com.ecom.order.api.models.BuyOrderModel;
 import com.ecom.order.api.models.PurchaseOrderModel;
 import com.ecom.order.api.models.PurchaseOrderSummaryModel;
+import com.ecom.order.api.models.ResultTransactionMessageModel;
 import com.ecom.order.services.PurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +22,12 @@ public class PurchaseOrderController {
     @Autowired private PurchaseOrderService purchaseOrderService;
     @Autowired private PurchaseOrderMap purchaseOrderMap;
     @Autowired private PurchaseOrderSummaryMap purchaseOrderSummaryMap;
+    @Autowired private BuyOrderMap buyOrderMap;
+    @Autowired private ResultTransactionMessageMap resultTransactionMessageMap;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void save(@RequestBody @NotNull PurchaseOrderModel model){
-        purchaseOrderService.save(purchaseOrderMap.toEntity(model));
+    public BuyOrderModel save(@RequestBody @NotNull PurchaseOrderModel model){
+        return buyOrderMap.toModel(purchaseOrderService.save(purchaseOrderMap.toEntity(model)));
     }
 
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
@@ -37,6 +43,11 @@ public class PurchaseOrderController {
     @RequestMapping(value = "/update", method = RequestMethod.PATCH)
     public void update(@RequestBody @NotNull PurchaseOrderModel model){
         purchaseOrderService.update(purchaseOrderMap.toEntity(model));
+    }
+
+    @RequestMapping(value = "/updatePaymentTransaction", method = RequestMethod.PATCH)
+    public void updatePaymentTransaction(@RequestBody @NotNull ResultTransactionMessageModel model){
+        purchaseOrderService.updatePaymentTransaction(resultTransactionMessageMap.toEntity(model));
     }
 
     @RequestMapping(value = "/findAllByStatus/{idPurchaseOrderStatus}", method = RequestMethod.GET)

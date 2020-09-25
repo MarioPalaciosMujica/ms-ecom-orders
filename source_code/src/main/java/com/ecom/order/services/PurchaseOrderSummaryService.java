@@ -17,7 +17,7 @@ public class PurchaseOrderSummaryService {
 
     public PurchaseOrderSummary save(@NotNull PurchaseOrderSummary entity){
         entity.setIdPurchaseOrderSummary(null);
-        purchaseOrderSummaryRepository.save(entity);
+        entity = purchaseOrderSummaryRepository.save(entity);
         return entity;
     }
 

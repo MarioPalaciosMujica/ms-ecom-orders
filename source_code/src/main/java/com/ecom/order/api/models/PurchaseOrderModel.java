@@ -17,14 +17,20 @@ public class PurchaseOrderModel {
     @JsonProperty("code")
     private String code;
 
-    @JsonProperty("isOrderPaid")
-    private boolean isOrderPaid;
+    @JsonProperty("idSession")
+    private String idSession;
+
+    @JsonProperty("idTransaction")
+    private Long idTransaction;
+
+    @JsonProperty("transactionDate")
+    private String transactionDate;
 
     @JsonProperty("created")
     private String created;
 
     @JsonProperty("modified")
-    private Date modified;
+    private String modified;
 
     @JsonProperty("msUserAccountsIdAccount")
     private Long msUserAccountsIdAccount;
@@ -34,6 +40,12 @@ public class PurchaseOrderModel {
 
     @JsonProperty("purchaseOrderStatus")
     private PurchaseOrderStatusModel purchaseOrderStatus;
+
+    @JsonProperty("paymentStatus")
+    private PaymentStatusModel paymentStatus;
+
+    @JsonProperty("shipment")
+    private ShipmentModel shipment;
 
     @JsonProperty("coupon")
     private CouponModel coupon;

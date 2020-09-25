@@ -16,4 +16,5 @@ public interface IPurchaseOrderRepository extends JpaRepository<PurchaseOrder, L
 
     @Query("select p from PurchaseOrder p where p.purchaseOrderStatus.idPurchaseOrderStatus = :idPurchaseOrderStatus")
     List<PurchaseOrder> findAllByStatus(@Param("idPurchaseOrderStatus") Long idPurchaseOrderStatus);
+
 }

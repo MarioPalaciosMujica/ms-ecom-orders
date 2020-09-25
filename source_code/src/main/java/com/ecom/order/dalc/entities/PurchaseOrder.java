@@ -27,6 +27,9 @@ public class PurchaseOrder {
     @Column(name = "id_transaction")
     private Long idTransaction;
 
+    @Column(name = "transaction_date")
+    private Date transactionDate;
+
     @Column(name = "created", nullable = false)
     private Date created;
 
@@ -56,7 +59,7 @@ public class PurchaseOrder {
     @JoinColumn(name = "id_coupon")
     private Coupon coupon;
 
-    @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Product> products;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -74,6 +77,7 @@ public class PurchaseOrder {
             inverseJoinColumns = @JoinColumn(name = "id_coupon")
     )
     private Set<Coupon> coupons;
+
 
 
     public Long getIdPurchaseOrder() {
@@ -106,6 +110,14 @@ public class PurchaseOrder {
 
     public void setIdTransaction(Long idTransaction) {
         this.idTransaction = idTransaction;
+    }
+
+    public Date getTransactionDate() {
+        return transactionDate;
+    }
+
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
     public Date getCreated() {

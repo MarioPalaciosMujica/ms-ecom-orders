@@ -26,20 +26,23 @@ public class ProductModel {
     @JsonProperty("quantity")
     private int quantity;
 
-    @JsonProperty("price")
-    private BigDecimal price;
-
     @JsonProperty("isSale")
     private boolean isSale;
 
     @JsonProperty("discountPercentage")
     private BigDecimal discountPercentage;
 
-    @JsonProperty("priceDiscount")
-    private BigDecimal priceDiscount;
+    @JsonProperty("currentBasePrice")
+    private BigDecimal currentBasePrice;
+
+    @JsonProperty("currentTotalPrice")
+    private BigDecimal currentTotalPrice;
+
+    @JsonProperty("isCapacityQty")
+    private boolean isCapacityQty;
 
     @JsonProperty("image")
-    private ImageModel image;
+    private List<ImageModel> images;
 
     @JsonProperty("imageSrc")
     private String imageSrc;
@@ -47,6 +50,11 @@ public class ProductModel {
     @JsonProperty("msProductIdProduct")
     private Long msProductIdProduct;
 
-    @JsonProperty("materials")
-    private List<MaterialModel> materials;
+    @JsonProperty("variants")
+    private List<VariantModel> variants;
+
+    @JsonProperty("variant")
+    private VariantModel variant;
+
+
 }

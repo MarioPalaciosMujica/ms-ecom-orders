@@ -13,18 +13,18 @@ public class PurchaseOrderStatusModel {
     @JsonProperty("idPurchaseOrderStatus")
     private Long idPurchaseOrderStatus;
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("status_code")
+    private String statusCode;
+
+    @JsonProperty("status_name")
+    private String statusName;
 
     @JsonProperty("description")
     private String description;
 
     @JsonProperty("stage")
-    private int stage;
+    private Integer stage;
 
-    @JsonProperty("created")
-    private Date created;
-
-    @JsonProperty("modified")
-    private Date modified;
+    @JsonProperty("isUpdatable")
+    private boolean isUpdatable;
 }

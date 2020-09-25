@@ -1,5 +1,6 @@
 package com.ecom.order.dalc.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,12 +11,17 @@ import java.util.Set;
 @Entity
 @Table(name = "tbl_purchase_order_statuses")
 @NoArgsConstructor
+@AllArgsConstructor
 public class PurchaseOrderStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_purchase_order_status", updatable = false, nullable = false, unique = true)
     private Long idPurchaseOrderStatus;
+
+    @Column(name = "status_code", nullable = false)
+    @Size(max = 10)
+    private String statusCode;
 
     @Column(name = "status_name", nullable = false, unique = true)
     @Size(min = 2, max = 50)
@@ -25,14 +31,11 @@ public class PurchaseOrderStatus {
     @Size(max = 255)
     private String description;
 
-    @Column(name = "stage", unique = true)
-    private int stage;
+    @Column(name = "stage")
+    private Integer stage;
 
-    @Column(name = "created", nullable = false)
-    private Date created;
-
-    @Column(name = "modified")
-    private Date modified;
+    @Column(name = "is_updatable")
+    private boolean isUpdatable;
 
     @OneToMany(mappedBy = "purchaseOrderStatus", fetch = FetchType.LAZY)
     private Set<PurchaseOrder> purchaseOrders;
@@ -44,6 +47,14 @@ public class PurchaseOrderStatus {
 
     public void setIdPurchaseOrderStatus(Long idPurchaseOrderStatus) {
         this.idPurchaseOrderStatus = idPurchaseOrderStatus;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getStatusName() {
@@ -62,28 +73,20 @@ public class PurchaseOrderStatus {
         this.description = description;
     }
 
-    public int getStage() {
+    public Integer getStage() {
         return stage;
     }
 
-    public void setStage(int stage) {
+    public void setStage(Integer stage) {
         this.stage = stage;
     }
 
-    public Date getCreated() {
-        return created;
+    public boolean isUpdatable() {
+        return isUpdatable;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getModified() {
-        return modified;
-    }
-
-    public void setModified(Date modified) {
-        this.modified = modified;
+    public void setUpdatable(boolean updatable) {
+        isUpdatable = updatable;
     }
 
     public Set<PurchaseOrder> getPurchaseOrders() {

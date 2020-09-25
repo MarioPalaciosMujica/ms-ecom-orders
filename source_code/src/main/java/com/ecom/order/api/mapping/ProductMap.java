@@ -1,7 +1,9 @@
 package com.ecom.order.api.mapping;
 
 import com.ecom.order.api.models.ProductModel;
+import com.ecom.order.api.models.VariantModel;
 import com.ecom.order.dalc.entities.Product;
+import com.ecom.order.dalc.entities.Variant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +14,7 @@ import java.util.List;
 @Component
 public class ProductMap {
 
-    @Autowired private MaterialMap materialMap;
+    @Autowired private VariantMap variantMap;
 
     public ProductModel toModel(Product entity){
         if(entity != null){
@@ -20,16 +22,18 @@ public class ProductMap {
             model.setIdProduct(entity.getIdProduct());
             model.setBarcode(entity.getBarcode());
             model.setTitle(entity.getTitle());
-            model.setPrice(entity.getPrice());
+            model.setDescription(entity.getDescription());
+            model.setQuantity(entity.getQuantity());
             model.setSale(entity.isSale());
             model.setDiscountPercentage(entity.getDiscountPercentage());
-            model.setPriceDiscount(entity.getPriceDiscount());
-            model.setQuantity(entity.getQuantity());
-            model.setMsProductIdProduct(entity.getMsProductIdProduct());
-            model.setImage(null);
-            model.setMsProductIdProduct(entity.getMsProductIdProduct());
+            model.setCurrentBasePrice(entity.getCurrentBasePrice());
+            model.setCurrentTotalPrice(entity.getCurrentTotalPrice());
+            model.setCapacityQty(entity.isCapacityQty());
+            model.setImages(null);
             model.setImageSrc(entity.getImageSrc());
-            model.setMaterials(materialMap.toModelList(new ArrayList<>(entity.getMaterials())));
+            model.setMsProductIdProduct(entity.getMsProductIdProduct());
+            model.setVariants(null);
+            model.setVariant(variantMap.toModel(entity.getVariant()));
             return model;
         }
         else{
@@ -43,14 +47,31 @@ public class ProductMap {
             entity.setIdProduct(model.getIdProduct());
             entity.setBarcode(model.getBarcode());
             entity.setTitle(model.getTitle());
-            entity.setPrice(model.getPrice());
+            entity.setDescription(model.getDescription());
+            entity.setQuantity(model.getQuantity());
             entity.setSale(model.isSale());
             entity.setDiscountPercentage(model.getDiscountPercentage());
-            entity.setPriceDiscount(model.getPriceDiscount());
-            entity.setQuantity(model.getQuantity());
+            entity.setCurrentBasePrice(model.getCurrentBasePrice());
+            entity.setCurrentTotalPrice(model.getCurrentTotalPrice());
+            entity.setCapacityQty(model.isCapacityQty());
             entity.setMsProductIdProduct(model.getMsProductIdProduct());
-            entity.setImageSrc(model.getImage().getSrc());
-            entity.setMaterials(new HashSet<>(this.materialMap.toEntityList(model.getMaterials())));
+            if(model.getImages() != null){
+                entity.setImageSrc(model.getImages().get(0).getSrc());
+            }
+            else{
+                entity.setImageSrc(model.getImageSrc());
+            }
+            if(model.getVariants() != null){
+                for (VariantModel variantModel : model.getVariants()){
+                    if(variantModel.isSelected()){
+                        entity.setVariant(variantMap.toEntity(variantModel));
+                    }
+                }
+            }
+            else{
+                entity.setVariant(variantMap.toEntity(model.getVariant()));
+            }
+
             return entity;
         }
         else{

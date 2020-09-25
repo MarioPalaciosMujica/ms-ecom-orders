@@ -18,8 +18,6 @@ public class PurchaseOrderStatusService {
 
     public PurchaseOrderStatus save(PurchaseOrderStatus entity){
         entity.setIdPurchaseOrderStatus(null);
-        entity.setCreated(new Date());
-        entity.setModified(null);
         return purchaseOrderStatusRepository.save(entity);
     }
 
@@ -40,8 +38,6 @@ public class PurchaseOrderStatusService {
     public boolean update(@NotNull PurchaseOrderStatus entity){
         PurchaseOrderStatus original = this.findById(entity.getIdPurchaseOrderStatus());
         if(original != null){
-            entity.setCreated(original.getCreated());
-            entity.setModified(new Date());
             purchaseOrderStatusRepository.save(entity);
             return true;
         }
@@ -58,6 +54,16 @@ public class PurchaseOrderStatusService {
         }
         else {
             return false;
+        }
+    }
+
+    public PurchaseOrderStatus findByCode(@NotNull String code){
+        Optional<PurchaseOrderStatus> entity = purchaseOrderStatusRepository.findByCode(code);
+        if(entity.isPresent()){
+            return entity.get();
+        }
+        else{
+            return null;
         }
     }
 }

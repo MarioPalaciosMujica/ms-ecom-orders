@@ -67,8 +67,7 @@ public class PurchaseOrderService {
         purchaseOrderRepository.save(entity);
     }
 
-    //TODO: update to payment transaction
-    public void updatePaymentTransaction(ResultTransactionMessage result){
+    public String updatePaymentTransaction(ResultTransactionMessage result){
         PurchaseOrder order = this.findById(Long.parseLong(result.getBuyOrder()));
         PaymentStatus payStatus = paymentStatusService.findByResponseCodeAndPaymentMethod(result.getResponseCode(), result.getPaymentModuleCode());
         PurchaseOrderStatus orderStatus = null;
@@ -91,7 +90,9 @@ public class PurchaseOrderService {
             order.setIdTransaction(result.getIdTransaction());
             order.setTransactionDate(result.getTransactionDate());
             this.update(order);
+            return order.getIdPurchaseOrder().toString();
         }
+        return "0";
     }
 
     public List<PurchaseOrder> findAllByStatus(Long idPurchaseOrderStatus){

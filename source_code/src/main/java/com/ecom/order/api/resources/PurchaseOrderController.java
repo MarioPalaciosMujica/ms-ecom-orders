@@ -8,9 +8,11 @@ import com.ecom.order.api.models.BuyOrderModel;
 import com.ecom.order.api.models.PurchaseOrderModel;
 import com.ecom.order.api.models.PurchaseOrderSummaryModel;
 import com.ecom.order.api.models.ResultTransactionMessageModel;
+import com.ecom.order.config.AppConfig;
 import com.ecom.order.services.PurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -24,6 +26,7 @@ public class PurchaseOrderController {
     @Autowired private PurchaseOrderSummaryMap purchaseOrderSummaryMap;
     @Autowired private BuyOrderMap buyOrderMap;
     @Autowired private ResultTransactionMessageMap resultTransactionMessageMap;
+    @Autowired private AppConfig appConfig;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public BuyOrderModel save(@RequestBody @NotNull PurchaseOrderModel model){
@@ -45,9 +48,10 @@ public class PurchaseOrderController {
         purchaseOrderService.update(purchaseOrderMap.toEntity(model));
     }
 
-    @RequestMapping(value = "/updatePaymentTransaction", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/updatePaymentTransaction", method = RequestMethod.POST)
     public void updatePaymentTransaction(@RequestBody @NotNull ResultTransactionMessageModel model){
-        purchaseOrderService.updatePaymentTransaction(resultTransactionMessageMap.toEntity(model));
+        System.out.println("PurchaseOrderController.updatePaymentTransaction()"); //DEBUG
+        String idPurchaseOrder = purchaseOrderService.updatePaymentTransaction(resultTransactionMessageMap.toEntity(model));
     }
 
     @RequestMapping(value = "/findAllByStatus/{idPurchaseOrderStatus}", method = RequestMethod.GET)

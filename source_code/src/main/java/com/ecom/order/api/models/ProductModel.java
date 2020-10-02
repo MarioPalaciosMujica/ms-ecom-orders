@@ -41,7 +41,7 @@ public class ProductModel {
     @JsonProperty("isCapacityQty")
     private boolean isCapacityQty;
 
-    @JsonProperty("image")
+    @JsonProperty("images")
     private List<ImageModel> images;
 
     @JsonProperty("imageSrc")

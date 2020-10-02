@@ -18,7 +18,7 @@ public class Option {
     @Column(name = "id_option", updatable = false, nullable = false, unique = true)
     private Long idOption;
 
-    @Column(name = "option_name", nullable = false, unique = true)
+    @Column(name = "option_name", nullable = false)
     @Size(min = 2, max = 50)
     private String optionName;
 
